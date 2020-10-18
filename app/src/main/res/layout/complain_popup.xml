@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Complain Here"
+                android:textStyle="bold"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                android:textColor="@android:color/white" />
+
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:background="@drawable/rectangle"
+        android:hint="write it here...."
+        android:id="@+id/complain_text"
+        android:maxLines="3"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:layout_height="100dp"
+        android:gravity="top">
+
+    </EditText>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:background="@drawable/rectangle"
+        android:hint="Name (Optional)"
+        android:id="@+id/complain_name"
+        android:maxLines="3"
+        android:padding="10dp"
+        android:layout_margin="20dp"
+        android:layout_height="wrap_content"
+        android:gravity="top">
+
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/complain_cancel"
+            android:text="cancel"
+            android:layout_margin="20dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/complain_done"
+            android:text="done"
+            android:layout_margin="20dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>

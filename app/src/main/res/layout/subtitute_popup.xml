@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+
+    app:strokeWidth="5dp"
+    app:strokeColor="@color/black"
+    >
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+       >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           >
+
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/bt_close"
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginLeft="5dp"
+                app:backgroundTint="@color/colorPrimary"
+                app:shapeAppearance="@color/white"
+                app:shapeAppearanceOverlay="@color/white"
+                android:layout_alignParentStart="true"
+                app:iconTint="@color/black"
+                app:icon="@drawable/ic_close_black_24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:text="Attendance"
+                android:layout_marginTop="5dp"
+                android:padding="10dp"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:fontFamily="@font/sofia"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/attendance_bg"/>
+
+            <!--com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/bt_save"
+               style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:backgroundTint="@android:color/transparent"
+                app:shapeAppearance="@android:color/white"
+                android:src="@drawable/ic_check_white"
+
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="Save"
+                android:textColor="@android:color/white" /-->
+
+        </RelativeLayout>
+
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+          >
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="8dp"
+                android:textSize="20sp"
+                android:text="Present"
+                android:fontFamily="@font/stylish"
+                android:id="@+id/present"
+                android:textColor="@color/black"
+                android:layout_margin="20dp"
+                android:background="@color/white"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Absent"
+                android:padding="8dp"
+                android:fontFamily="@font/stylish"
+                android:id="@+id/absent"
+                android:textColor="@color/black"
+                android:layout_margin="20dp"
+                android:textSize="20sp"
+                android:background="@color/white"/>
+
+        </RadioGroup>
+
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Substitute sent"
+            android:padding="8dp"
+            android:fontFamily="@font/stylish"
+            android:id="@+id/substitute_sent"
+            android:textColor="@color/black"
+            android:layout_margin="20dp"
+            android:background="@color/white"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Substitute not sent"
+            android:fontFamily="@font/stylish"
+            android:padding="8dp"
+            android:id="@+id/substitute_not_sent"
+            android:textColor="@color/black"
+            android:layout_margin="20dp"
+            android:textSize="20sp"
+            android:background="@color/white"/>
+
+    </RadioGroup>
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/member">
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/check_member"
+            android:text="Member Of SGM"
+            android:fontFamily="@font/stylish"
+            android:textSize="20dp"
+            android:padding="8dp"
+            android:layout_margin="20dp"
+            android:background="@color/white"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/sofia"
+            android:text="select Member"
+            android:textColor="@color/buttonred"
+            android:textSize="15sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/attendance_spinner"
+            android:padding="8dp"
+            android:layout_margin="20dp"
+          >
+
+        </Spinner>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/notmember">
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:id="@+id/check_not_member"
+            android:padding="8dp"
+            android:text="Not SGM Member"
+            android:fontFamily="@font/stylish"
+            android:textSize="20dp"
+            android:background="@color/white"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/name"
+            android:hint="Name Of Teacher"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            app:boxBackgroundColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_gravity="center_horizontal"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Batch"
+            android:hint="Batch"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+            app:boxBackgroundColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="20dp"
+                android:layout_gravity="center_horizontal"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:id="@+id/submit"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_gravity="center_horizontal"
+        android:padding="5dp"
+        android:fontFamily="@font/aclonica"/>
+    </LinearLayout>
+    </ScrollView>
+</com.google.android.material.card.MaterialCardView>

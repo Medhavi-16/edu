@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".list_member">
+    tools:context=".list_member"
+    android:background="@drawable/listmember_bg"
+    tools:ignore="Orientation">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/list_member"
-        >
+   <ProgressBar
+       android:layout_width="50dp"
+       android:layout_height="50dp"
+       android:layout_centerInParent="true"
+       android:id="@+id/list_progress"
+       android:outlineSpotShadowColor="@color/background"
+       style="@style/Widget.AppCompat.ProgressBar"
+       android:indeterminateTint="@color/buttonred"
+       >
 
+   </ProgressBar>
 
-    </TextView>
+   <ListView
+       android:layout_width="match_parent"
+       android:scrollingCache="false"
+       android:smoothScrollbar="true"
+       android:layout_height="wrap_content"
+       android:id="@+id/recyclerView"
+       android:layout_margin="4dp"
+       android:indeterminate="true"
+       android:indeterminateTintMode="src_atop"
+       android:background="@android:color/transparent">
 
-</LinearLayout>
+   </ListView>
+   </RelativeLayout>

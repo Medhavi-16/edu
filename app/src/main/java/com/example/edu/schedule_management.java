@@ -1,23 +1,33 @@
 package com.example.edu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.app.Dialog;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,15 +39,30 @@ import java.util.ArrayList;
 public class schedule_management extends AppCompatActivity {
 
     CardView cardView1,cardView3,cardView5,cardView6,cardView7,cardView8,cardView9,cardView10,cardView11,cardView12;
+    String s;
+    public static member_sgmid teacher_setter=new member_sgmid();
+    ArrayList<String> teacher_list=new ArrayList<>();
     DatabaseReference databaseReference;
     ArrayList<String> teacher_name=new ArrayList<>();
+    Spinner spinner;
     public static Teacher teacher;
+    public static Teacher_management.Teacher teacher_information;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule_management);
-
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.general_actionbar);
+        getSupportActionBar().setElevation(10);
+        View view = getSupportActionBar().getCustomView();
+        TextView textView=(TextView)view.findViewById(R.id.tab_name);
+        textView.setText("Set schedule");
+        Typeface typeface= ResourcesCompat.getFont(getApplicationContext(),R.font.berkshireswash);
+        textView.setTextColor(getResources().getColor(R.color.white));
+        databaseReference=FirebaseDatabase.getInstance().getReference().child("Schedule");
+        teacher_name.add("Select day");
         teacher_name.add("Monday");
         teacher_name.add("Tuesday");
         teacher_name.add("Wednesday");
@@ -46,12 +71,74 @@ public class schedule_management extends AppCompatActivity {
         teacher_name.add("Saturday");
 
 
+        // importing the list of teacher to teacher_list
 
+        teacher_list=teacher_setter.spinner_setter();
 
+        spinner=findViewById(R.id.spinner2);
 
-        Spinner spinner=findViewById(R.id.spinner2);
-        Button button=findViewById(R.id.check_button);
+        ArrayAdapter<String> aa=new ArrayAdapter<String>(schedule_management.this, android.R.layout.simple_spinner_item,teacher_name){
+            @Override
+            public boolean isEnabled(int position) {
+                if(position==0)
+                    return false;
+                else
+                    return true;
+            }
 
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View v=super.getDropDownView(position,convertView,parent);
+                TextView t=(TextView)v;
+                if(position==0)
+                    t.setTextColor(Color.GRAY);
+                else
+                    t.setTextColor(Color.BLACK);
+                return v;
+            }
+        };
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(aa);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+               switch (i)
+               {
+                   case 1:
+                       s="Monday";
+                       break;
+                   case 2:
+                       s="Tuesday";
+                       break;
+                   case 3:
+                       s="Wednesday";
+                       break;
+                   case 4:
+                       s="Thursday";
+                       break;
+                   case 5:
+                       s="Friday";
+                       break;
+                   case 6:
+                       s="Saturday";
+                       break;
+                   case 7:
+                       s="Sunday";
+                       break;
+                   default:
+                       s="Monday";
+               }
+               set_week_info(s);
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         findids();
 
@@ -59,7 +146,7 @@ public class schedule_management extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                showCustomDialog(R.id.teacher1,R.id.sub1);
+                showCustomDialog(1,R.id.teacher1,R.id.uid1,R.id.batch1,R.id.sub1);
 
             }
         });
@@ -67,137 +154,61 @@ public class schedule_management extends AppCompatActivity {
         cardView3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher3,R.id.sub3);
+                showCustomDialog(3,R.id.teacher3,R.id.uid3,R.id.batch3,R.id.sub3);
             }
         });
         cardView5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher5,R.id.sub5);
+                showCustomDialog(5,R.id.teacher5,R.id.uid5,R.id.batch5,R.id.sub5);
             }
         });
 
         cardView6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher6,R.id.sub6);
+                showCustomDialog(6,R.id.teacher6,R.id.uid6,R.id.batch6,R.id.sub6);
             }
         });
         cardView7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher7,R.id.sub7);
+                showCustomDialog(7,R.id.teacher7,R.id.uid7,R.id.batch7,R.id.sub7);
             }
         });
         cardView8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher8,R.id.sub8);
+                showCustomDialog(8,R.id.teacher8,R.id.uid8,R.id.batch8,R.id.sub8);
             }
         });
         cardView9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher9,R.id.sub9);
+                showCustomDialog(9,R.id.teacher9,R.id.uid9,R.id.batch9,R.id.sub9);
             }
         });
         cardView10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher10,R.id.sub10);
+                showCustomDialog(10,R.id.teacher10,R.id.uid10,R.id.batch10,R.id.sub10);
             }
         });
         cardView11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher11,R.id.sub11);
+                showCustomDialog(11,R.id.teacher11,R.id.uid11,R.id.batch11,R.id.sub11);
             }
         });
         cardView12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showCustomDialog(R.id.teacher12,R.id.sub12);
+                showCustomDialog(12,R.id.teacher12,R.id.uid12,R.id.batch12,R.id.sub12);
             }
         });
 
-
-
-        for (int counter=1;counter<9;counter++) {
-
-            if (!(counter == 2 || counter == 4)) {
-
-                databaseReference = FirebaseDatabase.getInstance().getReference().child("schedule_teacher").child("monday").child(String.valueOf(counter));
-                final int finalCounter = counter;
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                        teacher = dataSnapshot.getValue(Teacher.class);
-
-                        if(finalCounter ==1)
-                        {
-                            setvalue(R.id.teacher1,R.id.sub1);
-                        }
-                        else if(finalCounter ==3)
-                        {
-                            setvalue(R.id.teacher3,R.id.sub3);
-                        }
-
-                        else if(finalCounter ==5)
-                        {
-                            setvalue(R.id.teacher5,R.id.sub5);
-                        }
-
-                        else if(finalCounter ==6)
-                        {
-                            setvalue(R.id.teacher6,R.id.sub6);
-                        }
-
-                        else if(finalCounter ==7)
-                        {
-                            setvalue(R.id.teacher7,R.id.sub7);
-                        }
-
-                        else if(finalCounter ==8)
-                        {
-                            setvalue(R.id.teacher8,R.id.sub8);
-                        }
-
-                        else if(finalCounter ==9)
-                        {
-                            setvalue(R.id.teacher9,R.id.sub9);
-                        }
-                        else if(finalCounter ==10)
-                        {
-                            setvalue(R.id.teacher10,R.id.sub10);
-                        }
-
-                        else if(finalCounter ==11)
-                        {
-                            setvalue(R.id.teacher11,R.id.sub11);
-                        }
-
-                        else {
-                            setvalue(R.id.teacher12,R.id.sub12);
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        }
-
-            ArrayAdapter aa=new ArrayAdapter(schedule_management.this,android.R.layout.simple_spinner_item,teacher_name);
-            aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner.setAdapter(aa);
-
     }
-    private void showCustomDialog(final int a,final int b) {
+    private void showCustomDialog(final int d,final int a,final int b, final int e,final int c) {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
         dialog.setContentView(R.layout.dialog_event);
@@ -207,6 +218,72 @@ public class schedule_management extends AppCompatActivity {
         lp.copyFrom(dialog.getWindow().getAttributes());
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        final Spinner teacher_schedule_spinner= dialog.findViewById(R.id.techer_schedule_spinner);
+
+        ArrayAdapter aaa = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item,teacher_list);
+        aaa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        teacher_schedule_spinner.setAdapter(aaa);
+
+        teacher_schedule_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
+
+              member_sgmid mm=new member_sgmid();
+
+              final String id=mm.get_uid(adapterView.getItemAtPosition(i).toString());
+
+            //    Toast.makeText(getApplicationContext(),teacher_information.getUser_name(),Toast.LENGTH_LONG).show();
+
+                System.out.println("123");
+
+              DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference().child("teacher_info").child(id);
+
+              databaseReference.addValueEventListener(new ValueEventListener() {
+                  @Override
+                  public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                      teacher_information=dataSnapshot.getValue(Teacher_management.Teacher.class);
+
+                      System.out.println(id);
+
+                      TextInputLayout teacher_nam = dialog.findViewById(R.id.set_teacher_name);
+
+                      TextInputLayout u_id=dialog.findViewById(R.id.set_uid);
+
+                      TextInputLayout batch_nam=dialog.findViewById(R.id.set_batch);
+
+                      Toast.makeText(getApplicationContext(),teacher_information.getUser_name(),Toast.LENGTH_LONG).show();
+
+                      teacher_nam.getEditText().setText(teacher_information.getUser_name());
+
+                      teacher_nam.setEnabled(false);
+
+                      u_id.getEditText().setText(id);
+
+                      u_id.setEnabled(false);
+
+                      batch_nam.getEditText().setText(teacher_information.getBatch());
+
+                      batch_nam.setEnabled(false);
+
+                  }
+
+                  @Override
+                  public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                  }
+              });
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
 
 
         (dialog.findViewById(R.id.bt_close)).setOnClickListener(new View.OnClickListener() {
@@ -218,16 +295,38 @@ public class schedule_management extends AppCompatActivity {
         (dialog.findViewById(R.id.bt_save)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Typeface typeface= ResourcesCompat.getFont(getApplicationContext(),R.font.stylish);
 
-                String teacher,subject;
-                EditText teacher_nam = dialog.findViewById(R.id.set_teacher_name);
-                teacher = teacher_nam.getText().toString();
+                String teacher,uid,subject,batch;
+                TextInputLayout teacher_nam = dialog.findViewById(R.id.set_teacher_name);
+                teacher = teacher_nam.getEditText().getText().toString();
                 TextView aa = findViewById(a);
-                aa.setText(teacher);
-                EditText subject_nam= dialog.findViewById(R.id.set_subject);
-                subject = subject_nam.getText().toString();
-                TextView bb = findViewById(b);
-                bb.setText(subject);
+                aa.setText("Teacher: "+teacher);
+                aa.setTypeface(typeface);
+                aa.setTextColor(Color.BLACK);
+                TextInputLayout u_id=dialog.findViewById(R.id.set_uid);
+                uid=u_id.getEditText().getText().toString();
+                TextView bb=findViewById(b);
+                bb.setText("UID: "+uid);
+                bb.setTypeface(typeface);
+                bb.setTextColor(Color.BLACK);
+                TextInputLayout subject_nam= dialog.findViewById(R.id.set_subject);
+                subject = subject_nam.getEditText().getText().toString();
+                TextView cc = findViewById(c);
+                cc.setText("Subject: "+subject);
+                cc.setTypeface(typeface);
+                cc.setTextColor(Color.BLACK);
+                TextInputLayout batch_nam=dialog.findViewById(R.id.set_batch);
+                batch=batch_nam.getEditText().getText().toString();
+                TextView ee=findViewById(e);
+                ee.setText("Batch: "+batch);
+                ee.setTypeface(typeface);
+                ee.setTextColor(Color.BLACK);
+
+                DatabaseReference reference=databaseReference.child(s).child("Teachers").child(Integer.toString(d));
+                Teacher teach=new Teacher(teacher,uid,batch,subject);
+                reference.setValue(teach);
+
 
                 dialog.dismiss();
             }
@@ -235,6 +334,7 @@ public class schedule_management extends AppCompatActivity {
 
         dialog.show();
         dialog.getWindow().setAttributes(lp);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
     public void findids()
@@ -249,21 +349,23 @@ public class schedule_management extends AppCompatActivity {
         cardView10=findViewById(R.id.card10);
         cardView11=findViewById(R.id.card11);
         cardView12=findViewById(R.id.card12);
-
-
     }
 
     static class Teacher
     {
         private String Name;
         private String Subject;
+        private String uid;
+        private String batch;
+
 
         public Teacher() {}
-
-        public Teacher(String name,String subject)
+        public Teacher(String name,String uid,String batch,String subject)
         {
             this.Name=name;
+            this.uid=uid;
             this.Subject=subject;
+            this.batch=batch;
         }
 
         public String getName()
@@ -275,6 +377,14 @@ public class schedule_management extends AppCompatActivity {
             return Subject;
         }
 
+        public String getUid() {
+            return uid;
+        }
+
+        public void setUid(String uid) {
+            this.uid = uid;
+        }
+
         public void setName(String name)
         {
             this.Name=name;
@@ -283,15 +393,123 @@ public class schedule_management extends AppCompatActivity {
         {
             this.Subject=subject;
         }
+
+        public String getBatch() {
+            return batch;
+        }
     }
 
-    public void setvalue(final int aa,final int b)
+    public void setvalue(final int a,final int b, final int c, final int d, final int i)
     {
-        TextView ann = findViewById(aa);
-        TextView a = findViewById(b);
+        TextView teacher_name = findViewById(a);
+        TextView uid = findViewById(b);
+        TextView batch=findViewById(c);
+        TextView subject=findViewById(d);
+        String teach="Teacher: ";
+        String u_id="UID: ";
+        String Batch="Batch: ";
+        String Subject="Subject: ";
+        if(i==1)
+        {
+            teach=teach+teacher.getName();
+            u_id=u_id+teacher.getUid();
+            Batch=Batch+teacher.getBatch();
+            Subject=Subject+teacher.getSubject();
+        }
+        Typeface typeface= ResourcesCompat.getFont(getApplicationContext(),R.font.stylish);
+        teacher_name.setText(teach);
+        teacher_name.setTypeface(typeface);
+        teacher_name.setTextColor(Color.BLACK);
+        uid.setText(u_id);
+        uid.setTypeface(typeface);
+        uid.setTextColor(Color.BLACK);
+        batch.setText(Batch);
+        batch.setTypeface(typeface);
+        batch.setTextColor(Color.BLACK);
+        subject.setText(Subject);
+        subject.setTypeface(typeface);
+        subject.setTextColor(Color.BLACK);
 
-        ann.setText(teacher.getName());
-        a.setText(teacher.getSubject());
+    }
 
+
+    public void set_week_info(String day)
+    {
+        for (int counter=1;counter<=12;counter++) {
+
+            if (!(counter == 2 || counter == 4)) {
+
+                DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Schedule").child(day).child("Teachers").child(String.valueOf(counter));
+                final int finalCounter = counter;
+                ref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        teacher = dataSnapshot.getValue(Teacher.class);
+                        int i=0;
+                        if(teacher!=null)
+                        {  i=1;
+
+                        }
+                        else
+                        {
+                            i=0;
+                        }
+                        if(finalCounter ==1)
+                        {
+                            setvalue(R.id.teacher1,R.id.uid1,R.id.batch1,R.id.sub1,i);
+                        }
+                        else if(finalCounter ==3)
+                        {
+                            setvalue(R.id.teacher3,R.id.uid3,R.id.batch3,R.id.sub3,i);
+                        }
+
+                        else if(finalCounter ==5)
+                        {
+                            setvalue(R.id.teacher5,R.id.uid5,R.id.batch5,R.id.sub5,i);
+                        }
+
+                        else if(finalCounter ==6)
+                        {
+                            setvalue(R.id.teacher6,R.id.uid6,R.id.batch6,R.id.sub6,i);
+                        }
+
+                        else if(finalCounter ==7)
+                        {
+                            setvalue(R.id.teacher7,R.id.uid7,R.id.batch7,R.id.sub7,i);
+                        }
+
+                        else if(finalCounter ==8)
+                        {
+                            setvalue(R.id.teacher8,R.id.uid8,R.id.batch8,R.id.sub8,i);
+                        }
+
+                        else if(finalCounter ==9)
+                        {
+                            setvalue(R.id.teacher9,R.id.uid9,R.id.batch9,R.id.sub9,i);
+                        }
+                        else if(finalCounter ==10)
+                        {
+                            setvalue(R.id.teacher10,R.id.uid10,R.id.batch10,R.id.sub10,i);
+                        }
+
+                        else if(finalCounter ==11)
+                        {
+                            setvalue(R.id.teacher11,R.id.uid11,R.id.batch11,R.id.sub11,i);
+                        }
+
+                        else {
+                            setvalue(R.id.teacher12,R.id.uid12,R.id.batch12,R.id.sub12,i);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        }
     }
 }

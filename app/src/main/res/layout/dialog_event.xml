@@ -1,46 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:strokeWidth="5dp"
+    app:strokeColor="@color/black"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="25dp"
     android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <ImageButton
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/bt_close"
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/ic_close_black_24dp"
-                android:tint="@android:color/white" />
+                android:layout_margin="5dp"
+                app:backgroundTint="@color/colorPrimary"
+                app:shapeAppearance="@color/white"
+                app:shapeAppearanceOverlay="@color/white"
+                android:layout_alignParentStart="true"
+                app:iconTint="@color/white"
+
+                app:icon="@drawable/ic_clear_white" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="Edit Teacher"
+                android:text="Edit Teacher Info"
                 android:textStyle="bold"
+                android:fontFamily="@font/sofia"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/white"
+                />
 
-            <Button
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/bt_save"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="Save"
-                android:textColor="@android:color/white" />
+                style="@style/Widget.MaterialComponents.FloatingActionButton"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_margin="5dp"
+                app:backgroundTint="@color/colorPrimary"
+                app:shapeAppearance="@color/white"
+                app:shapeAppearanceOverlay="@color/white"
+                android:layout_alignParentStart="true"
+                app:icon="@drawable/ic_checkwhite"
+                app:iconTint="@color/white"/>
 
         </LinearLayout>
 
@@ -48,34 +69,104 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/sofia"
+            android:text="select Member"
+            android:textColor="@color/buttonred"
+            android:textSize="15sp"
+            android:textStyle="bold">
+
+        </TextView>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:id="@+id/techer_schedule_spinner"
+            android:spinnerMode="dialog">
+        </Spinner>
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="5dp"
+        android:id="@+id/set_teacher_name"
+        android:hint="Name of teacher"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        app:boxBackgroundColor="@color/white">
 
-        <EditText
-            android:id="@+id/set_teacher_name"
+        <com.google.android.material.textfield.TextInputEditText
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name of teacher"
-            android:layout_margin="20dp"
+            android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
             />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        app:boxBackgroundColor="@color/white"
+        android:id="@+id/set_uid"
+        android:hint="UID">
+
+        <com.google.android.material.textfield.TextInputEditText
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:inputType="text"
+            android:layout_margin="10dp"
+            android:layout_gravity="center_horizontal"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:id="@+id/set_batch"
+        android:hint="Batch"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        app:boxBackgroundColor="@color/white">
+
+    <com.google.android.material.textfield.TextInputEditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        app:boxBackgroundColor="@color/white"
+        android:layout_margin="5dp"
+        android:id="@+id/set_subject"
+        android:hint="Subject">
 
-        <EditText
-            android:id="@+id/set_subject"
+        <com.google.android.material.textfield.TextInputEditText
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Subject"
-            android:inputType="textPassword"
-            android:layout_margin="20dp"
+
+            android:inputType="text"
+            android:layout_margin="10dp"
             android:layout_gravity="center_horizontal"
             />
     </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
 
-</LinearLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
